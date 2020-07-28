@@ -71,7 +71,7 @@ Chess::Chess(Piece type, int startx, int starty, int endx, int endy, int d)
     targetNode = nullptr;
 
     // Initialise board
-    board = new int[dimension * dimension];
+    board = new int[(int64_t)(dimension) * (int64_t)(dimension)];
     int* boardpos = board;
     for (int i = 0; i < dimension * dimension; i++)
         *boardpos++ = INT_MAX;
@@ -80,7 +80,7 @@ Chess::Chess(Piece type, int startx, int starty, int endx, int endy, int d)
     root = new Node(startx, starty, nullptr);
 
     // Set initial position
-    boardpos = board + startx + (dimension * starty);
+    boardpos = board + startx + (static_cast<__int64>(dimension) * starty);
     *boardpos = 0;
     //PrintBoard();
 
@@ -113,8 +113,8 @@ Chess::Chess(Piece type, int startx, int starty, int endx, int endy, int d)
 void Chess::AllocateMoves(int *smoves, int r, int c)
 {
     // Allocate and assign the moves array as a single dimension array
-    moves = new int[r * c + 1];
-    memcpy(moves, smoves, r * c * sizeof(int));
+    moves = new int[(int64_t)r * c + 1];
+    memcpy(moves, smoves, (int64_t)r * c * sizeof(int));
     rows = r;
     cols = c;
 }
@@ -140,7 +140,7 @@ bool Chess::CheckMove(Node *n, int relx, int rely)
         return false;
 
     // Check if this location visited
-    int* boardpos = board + newx + (dimension * newy);
+    int* boardpos = board + newx + ((int64_t)dimension * newy);
 
 //    PrintBoard();
 
@@ -160,7 +160,7 @@ void Chess::PrintBoard()
     {
         for (int j = 0; j < dimension; j++)
         {
-            int* boardpos = board + i + (dimension * j);
+            int* boardpos = board + i + ((int64_t)dimension * j);
             
             if ((i == endPosx) && (j == endPosy))
                 printf(" X ");
@@ -196,7 +196,7 @@ bool Chess::AddChildren(Node* parent, int level)
             if (n != nullptr)
             {
                 // Set board at this position to be the tree level
-                int* boardpos = board + n->X() + (dimension * n->Y());
+                int* boardpos = board + n->X() + ((int64_t)dimension * n->Y());
                 *boardpos = n->Level();
                 //PrintBoard();
 

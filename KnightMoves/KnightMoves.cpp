@@ -43,7 +43,7 @@ int main()
 
         // Extract and print solution moves
         int i = nmoves;
-        Node** moves = new Node * [nmoves + 1];
+        Node** moves = new Node * [(int64_t)nmoves + 1];
 
         for (Node* n = Chess::targetNode; n; n = n->Parent())
             if (i >= 0) moves[i--] = n;
